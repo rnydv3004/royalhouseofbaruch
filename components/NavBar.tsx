@@ -48,10 +48,10 @@ const Navbar = () => {
     });
 
     const menuItems = [
-        { name: "The Sovereign", href: "#sovereign" },
-        { name: "Our History", href: "#history" },
-        { name: "Heraldry", href: "#heraldry" },
-        { name: "Foundation", href: "#foundation" },
+        { name: "Honours", href: "/honours" },
+        { name: "History", href: "/history" },
+        { name: "About", href: "/about" },
+        { name: "Contact", href: "/contact" },
     ];
 
     return (
