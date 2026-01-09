@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Cinzel, Pinyon_Script, Montserrat } from "next/font/google";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // --- FONTS ---
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "600", "800"] });
@@ -41,6 +42,7 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { scrollY } = useScroll();
+    const router = useRouter();
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         const shouldBeScrolled = latest > 50;
@@ -76,7 +78,7 @@ const Navbar = () => {
                     </div>
 
                     {/* --- CENTER: THE ROYAL CREST TAB --- */}
-                    <div className="absolute left-1/2 top-0 -translate-x-1/2 z-20">
+                    <div onClick={() => router.push("/")} className="absolute cursor-pointer left-1/2 top-0 -translate-x-1/2 z-20">
                         <motion.div
                             layout
                             className={`

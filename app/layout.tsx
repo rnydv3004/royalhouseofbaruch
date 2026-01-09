@@ -1,5 +1,6 @@
 import { Playfair_Display, Lato } from 'next/font/google'
 import './globals.css'
+import Navbar from '@/components/NavBar'
 
 // The "Royal" Serif Font
 const playfair = Playfair_Display({ 
@@ -25,6 +26,7 @@ export default function RootLayout({ children } : { children: React.ReactNode })
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${playfair.variable} ${lato.variable} bg-slate-50 text-slate-900 antialiased`}>
+        <Navbar />
         {children}
       </body>
     </html>
