@@ -3,11 +3,15 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Cinzel, Lato, Pinyon_Script, Montserrat } from "next/font/google";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
-  Menu, X, Crown, Anchor, Swords, Landmark, Scroll, Heart, Leaf, BookOpen, ArrowRight
+  Menu, X, Crown, Anchor, Swords, Landmark, Scroll, Heart, Leaf, BookOpen, ArrowRight,
+  Play, Bell, Calendar, ChevronRight
 } from "lucide-react";
 import Navbar from "@/components/NavBar";
+import RoyalBulletin from "@/components/Bulettin";
+import RoyalGallery from "@/components/RoyalGallery";
+import Lineage from "@/components/Lineage";
 
 // --- FONTS ---
 const cinzel = Cinzel({
@@ -96,20 +100,65 @@ const SectionHeading = ({ subtitle, title, align = "center", light = false }: { 
   </div>
 );
 
-const CornerFlourish = ({ className }: { className: string }) => (
-  <svg className={className} width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 2V35C2 35 5 45 15 45C25 45 30 35 30 35V15H50C50 15 60 15 60 25" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M2 2H35C35 2 45 5 45 15C45 25 35 30 30 30H15V50C15 50 15 60 25 60" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" />
-    {/* Decorative Dots */}
-    <circle cx="5" cy="5" r="3" fill="#D4AF37" />
-    <circle cx="60" cy="25" r="2" fill="#D4AF37" />
-    <circle cx="25" cy="60" r="2" fill="#D4AF37" />
-    {/* Inner curve */}
-    <path d="M10 10C10 10 20 20 40 10" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.5" />
-    <path d="M10 10C10 10 20 20 10 40" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.5" />
-  </svg>
+// --- NEW COMPONENT: HERO ANNOUNCEMENT (Floats inside Hero) ---
+const HeroAnnouncement = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 50 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 2, duration: 0.8 }}
+    className="absolute bottom-8 right-4 md:bottom-12 md:right-12 z-40 max-w-xs md:max-w-sm hidden md:block"
+  >
+    <div className="bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 p-5 rounded-sm shadow-2xl relative overflow-hidden group cursor-pointer hover:bg-white/20 transition-all duration-300">
+      {/* Decorative Corner */}
+      <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#D4AF37]"></div>
+
+      <div className="flex items-start gap-4">
+        <div className="bg-[#D4AF37] p-2 rounded-full text-[#0B2447] shadow-lg">
+          <Bell size={16} fill="currentColor" />
+        </div>
+        <div>
+          <p className={`${montserrat.className} text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest mb-1`}>
+            Latest Decree
+          </p>
+          <p className={`${cinzel.className} text-[#0B2447] text-sm leading-relaxed font-semibold`}>
+            The Golden Jubilee celebrations to commence this October at the Summer Palace.
+          </p>
+          <div className="flex items-center gap-2 mt-3 text-[#0B2447]/60 text-xs group-hover:text-[#8B1E1E] transition-colors">
+            <span>Read Announcement</span> <ArrowRight size={12} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </motion.div>
 );
 
+// --- NEW COMPONENT: OFFICIAL TICKER (News Bar) ---
+const OfficialTicker = () => {
+  return (
+    <div className="bg-[#0B2447] border-y-4 border-double border-[#D4AF37] py-3 overflow-hidden relative z-20 shadow-xl">
+      <div className="flex whitespace-nowrap">
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+          className="flex items-center gap-12 pr-12"
+        >
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="flex items-center gap-12">
+              <span className={`${montserrat.className} text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] flex items-center gap-4`}>
+                <Crown size={14} fill="currentColor" /> Royal Press Office
+              </span>
+              <span className={`${lato.className} text-white/80 text-sm font-light tracking-wide`}>
+                His Highness to visit the Cultural Center on June 15th • Applications for the 2026 Arts Grant are now open • Palace Gardens open to public this Sunday
+              </span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+// --- MODIFIED HERO COMPONENT ---
 const Hero = () => {
   const { scrollY } = useScroll();
   const yText = useTransform(scrollY, [0, 500], [0, 150]);
@@ -118,7 +167,6 @@ const Hero = () => {
     <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-white py-20 md:py-0">
 
       {/* 1. STATIC BACKGROUND TEXTURE (The "Jali" Screen) */}
-      {/* This adds the texture of carved marble stone to the whole page */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
         <div className="w-full h-full"
           style={{
@@ -129,7 +177,6 @@ const Hero = () => {
       </div>
 
       {/* 2. THE ROYAL FRAME - WITH ORNAMENTAL TRACK */}
-      {/* DESKTOP RECTANGLE FRAME (Hidden on Mobile) */}
       <div className="hidden md:block absolute inset-0 border border-[#D4AF37]/30">
         <div className="absolute inset-[6px] border border-[#D4AF37]/20 border-dashed"></div>
         {/* Desktop Corner Flourishes */}
@@ -151,7 +198,6 @@ const Hero = () => {
       </div>
 
       {/* --- LAYER 1: THE MUQARNAS DOME (Outer, Slow) --- */}
-      {/* Resembles the honeycomb ceiling patterns in Islamic architecture */}
       <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.06] pointer-events-none">
         <motion.div
           animate={{ rotate: 360 }}
@@ -166,7 +212,6 @@ const Hero = () => {
       </div>
 
       {/* --- LAYER 2: THE SHAMSA ROSETTE (Middle, Counter-Rotating) --- */}
-      {/* A dense floral sunburst found on royal manuscripts */}
       <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.095] pointer-events-none overflow-hidden">
         <motion.div
           animate={{ rotate: -360 }}
@@ -194,11 +239,11 @@ const Hero = () => {
         />
       </div>
 
-      {/* 4. ANIMATED BACKGROUND LAYERS (More visible on mobile now) */}
+      {/* 4. ANIMATED BACKGROUND LAYERS */}
       <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ duration: 150, repeat: Infinity, ease: "linear" }} // Faster rotation for mobile appeal
+          transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
           className="w-[180vw] h-[180vw] md:w-[1300px] md:h-[1300px]"
           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='0.4'%3E%3Ccircle cx='100' cy='100' r='99' stroke-width='0.5'/%3E%3Cpath d='M100 5 L120 15 L120 35 L100 45 L80 35 L80 15 Z' /%3E%3C/g%3E%3C/svg%3E")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}
         />
@@ -275,6 +320,10 @@ const Hero = () => {
           </div>
         </motion.div>
       </motion.div>
+
+      {/* --- INSERT HERO ANNOUNCEMENT --- */}
+      <HeroAnnouncement />
+
     </section>
   );
 };
@@ -342,125 +391,6 @@ const Sovereign = () => {
   );
 };
 
-// --- FIX: LINEAGE WITH CLEAR HEADINGS ---
-const Lineage = () => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start center", "end center"]
-  });
-
-  const chronicle = [
-    {
-      year: "1726",
-      ruler: "Nawab Abdullah Beg",
-      title: "The First Nawab",
-      desc: "Appointed by Nizam-ul-Mulk, Abdullah Beg established hereditary rule in Bharuch. As Mughal control waned in Gujarat, he exercised effective autonomy."
-    },
-    {
-      year: "1736",
-      ruler: "Nawab Mirza Beg",
-      title: "Diplomacy & Strength",
-      desc: "Ascending the throne amidst growing Maratha power, Mirza Beg maintained political autonomy. He arranged the cremation of Bajirao Peshwa with full honors."
-    },
-    {
-      year: "1741",
-      ruler: "The Great Defence",
-      title: "Siege of Bharuch",
-      desc: "When Damaji Gaekwad laid siege to the city, the Nizam intervened, declaring Bharuch his personal possession. The siege was withdrawn."
-    },
-    {
-      year: "1748",
-      ruler: "Sovereignty Asserted",
-      title: "The Royal Mint",
-      desc: "With the permission of Emperor Ahmad Shah, a mint was established at Bharuch. Coins were issued in the city's name—a definitive symbol of sovereignty."
-    },
-    {
-      year: "1756",
-      ruler: "Nawab Hamid Khan",
-      title: "Restoration of Order",
-      desc: "After a succession dispute, Hamid Khan ascended the throne, bringing stability. He defeated Maratha forces near Jambusar in 1761."
-    },
-    {
-      year: "1769",
-      ruler: "Nawab Muazzaz Khan",
-      title: "The Last Independent Ruler",
-      desc: "A patron of development, he built the Ahmed Bagh gardens. His reign ended due to the betrayal of his Diwan, Lallubhai."
-    },
-    {
-      year: "1803",
-      ruler: "Titular Legacy",
-      title: "The Hereditary Pensioners",
-      desc: "The British recognized the descendants as Titular Nawabs. The family retained their noble status and served as custodians of heritage."
-    }
-  ];
-
-  return (
-    <section id="history" ref={containerRef} className="py-24 md:py-32 bg-[#FDFBF7] relative overflow-hidden">
-
-      <SectionHeading subtitle="The Chronicle" title="History of the Nawabs" />
-
-      <div className="container mx-auto px-6 md:px-12 relative">
-
-        {/* Animated Golden Thread (Progress Line) - Hidden on Mobile */}
-        <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] bg-[#0B2447]/5 transform -translate-x-1/2 h-full z-0">
-          <motion.div
-            style={{ scaleY: scrollYProgress }}
-            className="absolute top-0 left-0 w-full bg-[#D4AF37] origin-top h-full"
-          />
-        </div>
-
-        <div className="space-y-16 md:space-y-32">
-          {chronicle.map((event, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8 }}
-              className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
-            >
-
-              {/* Central Jewel - Hidden on Mobile */}
-              <div className="hidden md:flex absolute left-1/2 top-0 -translate-x-1/2 z-20 w-8 h-8 items-center justify-center">
-                <div className="w-5 h-5 bg-[#FDFBF7] border-2 border-[#D4AF37] rotate-45 flex items-center justify-center shadow-lg">
-                  <div className="w-2 h-2 bg-[#0B2447]"></div>
-                </div>
-              </div>
-
-              {/* Spacer */}
-              <div className="flex-1 hidden md:block"></div>
-
-              {/* Content Card */}
-              <div className="flex-1 w-full md:px-16">
-                <div className={`
-                    relative p-8 bg-white border border-[#D4AF37]/20 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] 
-                    hover:border-[#D4AF37] transition-all duration-500 cursor-hover
-                    ${idx % 2 === 0 ? 'md:text-left' : 'md:text-right'} text-center md:text-left
-                 `}>
-
-                  {/* FIXED YEAR: No longer overlapping. Displayed clearly at the top of the card. */}
-                  <div className={`flex items-baseline gap-4 mb-4 ${idx % 2 === 0 ? 'md:justify-start' : 'md:justify-end'} justify-center`}>
-                    <h3 className={`${cinzel.className} text-4xl md:text-5xl text-[#D4AF37] font-bold`}>{event.year}</h3>
-                    <div className="h-px w-12 bg-[#D4AF37]/50"></div>
-                  </div>
-
-                  <div className="relative z-10">
-                    <span className={`${montserrat.className} text-[#0B2447]/60 font-bold text-[10px] tracking-[0.2em] uppercase mb-2 block`}>
-                      {event.ruler}
-                    </span>
-                    <h3 className={`${cinzel.className} text-xl md:text-2xl text-[#0B2447] mb-4`}>{event.title}</h3>
-                    <p className={`${lato.className} text-gray-500 font-light leading-relaxed text-sm`}>{event.desc}</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 const Heraldry = () => {
   const symbols = [
@@ -545,38 +475,74 @@ const Philanthropy = () => {
   );
 };
 
-const Gazette = () => {
+// --- NEW COMPONENT: ROYAL CHANNEL (Video Section) ---
+const RoyalChannel = () => {
   return (
-    <section id="gazette" className="py-24 md:py-32 bg-[#F9F8F6]">
-      <SectionHeading subtitle="Official Communications" title="The Royal Gazette" />
+    <section className="py-24 bg-[#081b36] relative overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none"
+        style={{ backgroundImage: `radial-gradient(circle at 50% 50%, #D4AF37 0%, transparent 60%)` }}></div>
 
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-3 gap-8">
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <SectionHeading subtitle="The Royal Channel" title="Addresses & Documentaries" light={true} />
+
+        <div className="relative aspect-video w-full max-w-5xl mx-auto shadow-2xl border border-[#D4AF37]/30 group cursor-pointer overflow-hidden rounded-sm">
+          {/* Placeholder Video Thumbnail */}
+          <Image
+            src="https://images.unsplash.com/photo-1576049519901-ef17971a3c48?w=1600&q=80"
+            alt="Royal Address"
+            fill
+            className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-60"
+          />
+
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500"></div>
+
+          {/* Custom Play Button */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="w-20 h-20 md:w-24 md:h-24 bg-[#D4AF37]/20 backdrop-blur-sm rounded-full border border-[#D4AF37] flex items-center justify-center relative"
+            >
+              <div className="absolute inset-0 border border-[#D4AF37] rounded-full animate-ping opacity-50"></div>
+              <Play fill="#D4AF37" className="text-[#D4AF37] ml-1 w-8 h-8 md:w-10 md:h-10" />
+            </motion.div>
+          </div>
+
+          {/* Video Info Overlay */}
+          <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 bg-linear-to-t from-black/90 to-transparent">
+            <div className="flex items-center gap-4 mb-2">
+              <span className="bg-[#8B1E1E] text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest rounded-xs">
+                Featured
+              </span>
+              <span className="text-white/60 text-xs flex items-center gap-2 font-mono">
+                <Calendar size={12} /> Oct 12, 2025
+              </span>
+            </div>
+            <h3 className={`${cinzel.className} text-2xl md:text-4xl text-white mb-2`}>
+              The State of Heritage: An Address by the Crown Prince
+            </h3>
+            <p className={`${lato.className} text-white/70 max-w-2xl text-sm md:text-base`}>
+              A 20-minute documentary exploring the restoration efforts of the ancestral forts and the future of our cultural preservation initiatives.
+            </p>
+          </div>
+        </div>
+
+        {/* Video Grid (Smaller items) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-5xl mx-auto">
           {[1, 2, 3].map((i) => (
-            <article key={i} className="group bg-white p-2 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-hover">
-              <div className="relative h-64 overflow-hidden mb-6">
-                <Image
-                  src={`https://images.unsplash.com/photo-1599940824399-b87987ce0799?w=800&q=80`}
-                  alt="News" fill className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-[#0B2447]/20 group-hover:bg-transparent transition-colors duration-500"></div>
+            <div key={i} className="flex gap-4 items-start group cursor-pointer hover:bg-white/5 p-3 rounded-lg transition-colors">
+              <div className="relative w-24 h-16 shrink-0 overflow-hidden rounded-xs bg-black">
+                <Image src={`https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=400&q=80`} alt="thumb" fill className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 flex items-center justify-center"><Play size={16} className="text-white drop-shadow-md" fill="white" /></div>
               </div>
-
-              <div className="px-6 pb-8">
-                <div className="flex justify-between items-center border-b border-gray-100 pb-4 mb-4">
-                  <span className={`${montserrat.className} text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest`}>Decree</span>
-                  <span className={`${lato.className} text-xs text-gray-400 italic`}>May 24, 2026</span>
-                </div>
-
-                <h3 className={`${cinzel.className} text-xl text-[#0B2447] mb-4 leading-snug group-hover:text-[#8B1E1E] transition-colors`}>
-                  Restoration of the Coastal Fortifications
-                </h3>
-
-                <button className={`text-[10px] font-bold uppercase tracking-widest text-[#0B2447] group-hover:text-[#D4AF37] transition-colors flex items-center gap-2 ${montserrat.className}`}>
-                  Read Entry <span className="w-8 h-px bg-current"></span>
-                </button>
+              <div>
+                <h4 className={`${cinzel.className} text-white text-sm group-hover:text-[#D4AF37] transition-colors leading-tight mb-1`}>
+                  The Royal Archives: Episode {i}
+                </h4>
+                <p className="text-white/40 text-xs font-mono">12:30 • Historic Tour</p>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
@@ -644,11 +610,14 @@ export default function Home() {
       <Navbar />
 
       <Hero />
+      <RoyalBulletin />
       <Sovereign />
+      <RoyalGallery />
+
       <Lineage />
-      <Heraldry />
+      <RoyalChannel />
       <Philanthropy />
-      <Gazette />
+      <Heraldry />
       <Footer />
     </main>
   );
