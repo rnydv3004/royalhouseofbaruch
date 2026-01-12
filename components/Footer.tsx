@@ -2,7 +2,7 @@ import Image from "next/image";
 import { cinzel, lato, montserrat, pinyon } from "@/app/fonts";
 import { Anchor, Scroll } from "lucide-react";
 
-const Footer = () => {
+export const Footer = () => {
     return (
         <footer className="bg-[#0B2447] text-white pt-24 pb-12 border-t-8 border-[#D4AF37] relative">
             <div className="container mx-auto px-6 md:px-12 grid md:grid-cols-4 gap-12 mb-20 relative z-10">

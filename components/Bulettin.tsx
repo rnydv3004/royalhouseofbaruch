@@ -193,7 +193,7 @@ export const RoyalBulletin = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pb-10">
                         <AnimatePresence mode="popLayout">
-                            {items.map((item, index) => {
+                            {items && items.map((item, index) => {
                                 const isLastElement = items.length === index + 1;
 
                                 return (

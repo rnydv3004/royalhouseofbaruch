@@ -50,6 +50,8 @@ const Navbar = () => {
     });
 
     const menuItems = [
+        { name: "Home", href: "/" },
+        { name: "Gallery", href: "/gallery" },
         { name: "Honours", href: "/honours" },
         { name: "History", href: "/history" },
         { name: "About", href: "/about" },
@@ -72,7 +74,7 @@ const Navbar = () => {
                 >
                     {/* --- LEFT LINKS --- */}
                     <div className="hidden md:flex gap-8 flex-1 justify-start">
-                        {menuItems.slice(0, 2).map((item) => (
+                        {menuItems.slice(0, 3).map((item) => (
                             <NavLink key={item.name} item={item} />
                         ))}
                     </div>
@@ -109,7 +111,7 @@ const Navbar = () => {
 
                     {/* --- RIGHT LINKS --- */}
                     <div className="hidden md:flex gap-8 flex-1 justify-end">
-                        {menuItems.slice(2, 4).map((item) => (
+                        {menuItems.slice(3, 6).map((item) => (
                             <NavLink key={item.name} item={item} />
                         ))}
                     </div>

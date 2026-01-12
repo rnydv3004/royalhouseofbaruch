@@ -100,37 +100,6 @@ const SectionHeading = ({ subtitle, title, align = "center", light = false }: { 
   </div>
 );
 
-// --- NEW COMPONENT: HERO ANNOUNCEMENT (Floats inside Hero) ---
-const HeroAnnouncement = () => (
-  <motion.div
-    initial={{ opacity: 0, y: 50 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 2, duration: 0.8 }}
-    className="absolute bottom-8 right-4 md:bottom-12 md:right-12 z-40 max-w-xs md:max-w-sm hidden md:block"
-  >
-    <div className="bg-white/10 backdrop-blur-md border border-[#D4AF37]/30 p-5 rounded-sm shadow-2xl relative overflow-hidden group cursor-pointer hover:bg-white/20 transition-all duration-300">
-      {/* Decorative Corner */}
-      <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#D4AF37]"></div>
-
-      <div className="flex items-start gap-4">
-        <div className="bg-[#D4AF37] p-2 rounded-full text-[#0B2447] shadow-lg">
-          <Bell size={16} fill="currentColor" />
-        </div>
-        <div>
-          <p className={`${montserrat.className} text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest mb-1`}>
-            Latest Decree
-          </p>
-          <p className={`${cinzel.className} text-[#0B2447] text-sm leading-relaxed font-semibold`}>
-            The Golden Jubilee celebrations to commence this October at the Summer Palace.
-          </p>
-          <div className="flex items-center gap-2 mt-3 text-[#0B2447]/60 text-xs group-hover:text-[#8B1E1E] transition-colors">
-            <span>Read Announcement</span> <ArrowRight size={12} />
-          </div>
-        </div>
-      </div>
-    </div>
-  </motion.div>
-);
 
 // --- NEW COMPONENT: OFFICIAL TICKER (News Bar) ---
 const OfficialTicker = () => {
@@ -320,9 +289,6 @@ const Hero = () => {
           </div>
         </motion.div>
       </motion.div>
-
-      {/* --- INSERT HERO ANNOUNCEMENT --- */}
-      <HeroAnnouncement />
 
     </section>
   );

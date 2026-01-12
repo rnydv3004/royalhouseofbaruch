@@ -1,16 +1,17 @@
 import { Playfair_Display, Lato } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/NavBar'
+import { Footer } from '@/components/Footer'
 
 // The "Royal" Serif Font
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
 })
 
 // The Clean "Modern" Sans Font
-const lato = Lato({ 
+const lato = Lato({
   weight: ['300', '400', '700'],
   subsets: ['latin'],
   variable: '--font-lato',
@@ -22,12 +23,13 @@ export const metadata = {
   description: 'The Official Website of the Royal House',
 }
 
-export default function RootLayout({ children } : { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${playfair.variable} ${lato.variable} bg-slate-50 text-slate-900 antialiased`}>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   )
