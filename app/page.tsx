@@ -5,12 +5,13 @@ import Image from "next/image";
 import { Cinzel, Lato, Pinyon_Script, Montserrat } from "next/font/google";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
-  Menu, X, Crown, Anchor, Swords, Landmark, Scroll, Heart, Leaf, BookOpen, ArrowRight,
-  Play, Bell, Calendar, ChevronRight
+  Crown, Anchor, Swords, Landmark, Heart, Leaf, BookOpen, ArrowRight,
+  Bell
 } from "lucide-react";
-import RoyalBulletin from "@/components/Bulettin";
 import RoyalGallery from "@/components/RoyalGallery";
 import Lineage from "@/components/Lineage";
+import { RoyalBulletin } from "@/components/Bulettin";
+import RoyalChannel from "@/components/RoyalChannel";
 
 // --- FONTS ---
 const cinzel = Cinzel({
@@ -367,7 +368,7 @@ const Sovereign = () => {
               The Head of the House
             </span>
             <h2 className={`${cinzel.className} text-4xl md:text-6xl text-[#0B2447] mb-8 leading-none`}>
-              The Crown <br /> <span className="italic font-light opacity-80">Prince</span>
+              Nawab of <br /> <span className="italic font-light opacity-80">Bharuch</span>
             </h2>
 
             <div className="space-y-6 text-[#0B2447]/70 text-base md:text-lg font-light leading-relaxed font-serif">
@@ -380,7 +381,7 @@ const Sovereign = () => {
             </div>
 
             <div className="mt-12 pt-8 border-t border-[#D4AF37]/20">
-              <div className={`${pinyon.className} text-4xl md:text-5xl text-[#0B2447] mb-2`}>Nawab Mirza Wajahat Ali</div>
+              <div className={`${pinyon.className} text-4xl md:text-5xl text-[#0B2447] mb-2`}>H.H. Nawab Haji Mirza Wajahat Ali Khan</div>
               <span className={`text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] ${montserrat.className} font-bold`}>Sovereign Head</span>
             </div>
           </motion.div>
@@ -469,81 +470,6 @@ const Philanthropy = () => {
           ))}
         </div>
 
-      </div>
-    </section>
-  );
-};
-
-// --- NEW COMPONENT: ROYAL CHANNEL (Video Section) ---
-const RoyalChannel = () => {
-  return (
-    <section className="py-24 bg-[#081b36] relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none"
-        style={{ backgroundImage: `radial-gradient(circle at 50% 50%, #D4AF37 0%, transparent 60%)` }}></div>
-
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <SectionHeading subtitle="The Royal Channel" title="Addresses & Documentaries" light={true} />
-
-        <div className="relative aspect-video w-full max-w-5xl mx-auto shadow-2xl border border-[#D4AF37]/30 group cursor-pointer overflow-hidden rounded-sm">
-          {/* Placeholder Video Thumbnail */}
-          <Image
-            src="https://images.unsplash.com/photo-1576049519901-ef17971a3c48?w=1600&q=80"
-            alt="Royal Address"
-            fill
-            className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-60"
-          />
-
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500"></div>
-
-          {/* Custom Play Button */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              className="w-20 h-20 md:w-24 md:h-24 bg-[#D4AF37]/20 backdrop-blur-sm rounded-full border border-[#D4AF37] flex items-center justify-center relative"
-            >
-              <div className="absolute inset-0 border border-[#D4AF37] rounded-full animate-ping opacity-50"></div>
-              <Play fill="#D4AF37" className="text-[#D4AF37] ml-1 w-8 h-8 md:w-10 md:h-10" />
-            </motion.div>
-          </div>
-
-          {/* Video Info Overlay */}
-          <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 bg-linear-to-t from-black/90 to-transparent">
-            <div className="flex items-center gap-4 mb-2">
-              <span className="bg-[#8B1E1E] text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest rounded-xs">
-                Featured
-              </span>
-              <span className="text-white/60 text-xs flex items-center gap-2 font-mono">
-                <Calendar size={12} /> Oct 12, 2025
-              </span>
-            </div>
-            <h3 className={`${cinzel.className} text-2xl md:text-4xl text-white mb-2`}>
-              The State of Heritage: An Address by the Crown Prince
-            </h3>
-            <p className={`${lato.className} text-white/70 max-w-2xl text-sm md:text-base`}>
-              A 20-minute documentary exploring the restoration efforts of the ancestral forts and the future of our cultural preservation initiatives.
-            </p>
-          </div>
-        </div>
-
-        {/* Video Grid (Smaller items) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-5xl mx-auto">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex gap-4 items-start group cursor-pointer hover:bg-white/5 p-3 rounded-lg transition-colors">
-              <div className="relative w-24 h-16 shrink-0 overflow-hidden rounded-xs bg-black">
-                <Image src={`https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=400&q=80`} alt="thumb" fill className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute inset-0 flex items-center justify-center"><Play size={16} className="text-white drop-shadow-md" fill="white" /></div>
-              </div>
-              <div>
-                <h4 className={`${cinzel.className} text-white text-sm group-hover:text-[#D4AF37] transition-colors leading-tight mb-1`}>
-                  The Royal Archives: Episode {i}
-                </h4>
-                <p className="text-white/40 text-xs font-mono">12:30 • Historic Tour</p>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
