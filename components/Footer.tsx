@@ -25,8 +25,18 @@ export const Footer = () => {
                 <div>
                     <h5 className={`${montserrat.className} text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] mb-8`}>The Household</h5>
                     <ul className={`space-y-4 text-sm text-white/60 ${lato.className} font-light`}>
-                        {["The Royal Family", "Orders & Decorations", "Patronages", "History"].map(item => (
-                            <li key={item}><a href="#" className="hover:text-white hover:translate-x-2 transition-all inline-block cursor-hover">{item}</a></li>
+                        {[
+                            { label: "The Royal Family", href: "/about" },
+                            { label: "History", href: "/history" },
+                            { label: "Honours & Awards", href: "/honours" },
+                            { label: "Royal Gallery", href: "/gallery" },
+                            { label: "Contact Us", href: "/contact" }
+                        ].map((item) => (
+                            <li key={item.label}>
+                                <a href={item.href} className="hover:text-white hover:translate-x-2 transition-all inline-block cursor-hover">
+                                    {item.label}
+                                </a>
+                            </li>
                         ))}
                     </ul>
                 </div>

@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { Cinzel, Lato, Pinyon_Script, Montserrat } from "next/font/google";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { 
-  Crown, Scroll, Feather, Map, 
-  Swords, Anchor, BookOpen, Quote, 
+import {
+  Crown, Scroll, Feather, Map,
+  Swords, Anchor, BookOpen, Quote,
   ChevronDown
 } from "lucide-react";
 
@@ -27,7 +27,7 @@ const Divider = () => (
 );
 
 // 2. Drop Cap Paragraph (First letter is big and gold)
-const DropCapText = ({ children } : { children: any }) => (
+const DropCapText = ({ children }: { children: any }) => (
   <p className={`${lato.className} text-lg md:text-xl text-[#0B2447]/80 leading-loose text-justify mb-6`}>
     <span className={`${cinzel.className} float-left text-6xl md:text-7xl text-[#D4AF37] pr-3 pt-2 leading-[0.8]`}>
       {children.charAt(0)}
@@ -37,14 +37,14 @@ const DropCapText = ({ children } : { children: any }) => (
 );
 
 // 3. Regular Paragraph
-const Paragraph = ({ children } : { children: React.ReactNode }) => (
+const Paragraph = ({ children }: { children: React.ReactNode }) => (
   <p className={`${lato.className} text-lg md:text-xl text-[#0B2447]/80 leading-loose text-justify mb-6`}>
     {children}
   </p>
 );
 
 // 4. Chapter Heading
-const ChapterTitle = ({ title, subtitle, date } : { title: string, subtitle?: string, date: string }) => (
+const ChapterTitle = ({ title, subtitle, date }: { title: string, subtitle?: string, date: string }) => (
   <div className="text-center mb-10 mt-4">
     <span className={`${montserrat.className} text-[#D4AF37] text-xs font-bold tracking-[0.3em] uppercase block mb-2`}>
       {date}
@@ -75,14 +75,14 @@ export default function HistoryPage() {
       {/* --- HERO SECTION --- */}
       <section className="relative h-[80vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         {/* Subtle Grain Texture */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
         </div>
-        
+
         {/* Background Radial Gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4AF37]/10 via-transparent to-transparent"></div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -92,7 +92,7 @@ export default function HistoryPage() {
             <div className="w-px h-16 bg-gradient-to-b from-transparent to-[#0B2447]"></div>
             <Crown className="text-[#D4AF37] w-8 h-8" strokeWidth={1} />
           </div>
-          
+
           <h1 className={`${cinzel.className} text-5xl md:text-7xl lg:text-8xl text-[#0B2447] tracking-tight mb-4`}>
             Royal <span className="text-[#D4AF37]">Chronicle</span>
           </h1>
@@ -101,7 +101,7 @@ export default function HistoryPage() {
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
@@ -114,24 +114,24 @@ export default function HistoryPage() {
 
       {/* --- CONTENT CONTAINER --- */}
       <article className="max-w-3xl mx-auto px-6 py-20 relative">
-        
+
         {/* Decorative Side Borders (Desktop Only) */}
         <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-px border-l border-dashed border-[#0B2447]/10 ml-12"></div>
         <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-px border-r border-dashed border-[#0B2447]/10 mr-12"></div>
 
         {/* --- CHAPTER 1: THE FOUNDATION --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
           <div className="flex justify-center mb-4 text-[#D4AF37]"><Scroll className="w-6 h-6" /></div>
-          
-          <ChapterTitle 
-            date="Circa 1726" 
-            title="The First Nawab" 
-            subtitle="Abdullah Beg Nek Alam Khan"
+
+          <ChapterTitle
+            date="Circa 1726"
+            title="The Nawabs of Bharuch"
+            subtitle=""
           />
 
           <DropCapText>
@@ -139,14 +139,19 @@ export default function HistoryPage() {
           </DropCapText>
 
           <Paragraph>
-            With the decline of Mughal authority in Gujarat, Abdullah Beg exercised effective autonomy and laid the foundation of hereditary nawabi rule in Bharuch. He ruled as the first Nawab until his death in 1736. Abdullah Beg’s eldest son, Mehmood Khan, had predeceased him in 1728, leaving behind a young son, Hamid Khan, who was still a minor at the time of Abdullah Beg’s death.
+            In 1726, Nizam-ul-Mulk appointed Abdullah Beg as governor of Bharuch and conferred upon him the title Nek Alam Khan. With the decline of Mughal authority in Gujarat, Abdullah Beg exercised effective autonomy and laid the foundation of hereditary nawabi rule in Bharuch. He ruled as the first Nawab until his death in 1736.¹
           </Paragraph>
+
+          <Paragraph>
+            Abdullah Beg&apos;s eldest son, Mehmood Khan, had predeceased him in 1728, leaving behind a young son, Hamid Khan, who was still a minor at the time of Abdullah Beg&apos;s death.
+          </Paragraph>
+
         </motion.div>
 
         <Divider />
 
         {/* --- CHAPTER 2: MARATHA RELATIONS --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -154,12 +159,12 @@ export default function HistoryPage() {
         >
           <div className="flex justify-center mb-4 text-[#D4AF37]"><Swords className="w-6 h-6" /></div>
 
-          <ChapterTitle 
-            date="1736 – 1741" 
-            title="Diplomacy & Siege" 
-            subtitle="The Reign of Mirza Beg"
+          <ChapterTitle
+            date="1736 – 1741"
+            title="Diplomacy & Siege"
+            subtitle="Mirza Beg and the Second Nek Alam Khan"
           />
-          
+
 
           <DropCapText>
             In 1736, Mirza Beg, the second son of Abdullah Beg, ascended the throne of Bharuch. Upon accession, he adopted the title Nek Alam Khan II, thereby becoming the second ruler to bear this designation. His reign coincided with growing Maratha influence in western India, although Bharuch continued to maintain a degree of political autonomy.
@@ -175,85 +180,172 @@ export default function HistoryPage() {
               "Damaji Gaekwad laid siege to Bharuch owing to its strategic location. The Nizam informed Damaji that Bharuch was his personal possession and should not be disturbed. Consequently, Damaji withdrew the siege."
             </p>
           </div>
-          
-
-          <Paragraph>
-            It is also recorded that Nek Alam Khan paid Damaji a share of the zakat collected in Bharuch, after which the Gaekwads began receiving a regular portion of this revenue.
-          </Paragraph>
         </motion.div>
 
         <Divider />
 
         {/* --- CHAPTER 3: SOVEREIGNTY --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <ChapterTitle 
+          <ChapterTitle
             date="1748"
-            title="Minting Rights" subtitle={undefined}          />
-          
+            title="The Siege of Bharuch" subtitle={'Relations with the Gaekwads'} />
+
           <DropCapText>
-            In 1748, with the permission of Emperor Ahmad Shah, a mint was established at Bharuch, and coins were issued in the city’s name.⁴ This represented a significant assertion of sovereignty.
+            In 1741, during the rule of Mirza Beg Nek Alam Khan II, Damaji Gaekwad, accompanied by his father Pilaji Gaekwad, laid siege to Bharuch owing to its strategic location, strong fortifications, and riverine access via the Narmada.² As the Maratha forces advanced, Nek Alam Khan II prepared the city’s defenses and appealed to the Nizam for assistance.
           </DropCapText>
 
           <Paragraph>
-            Mirza Beg Nek Alam Khan II died in 1752. He was succeeded briefly by his younger brother Khar Talab Khan, who ruled for only three months. Following these events, the descendants of Nizam-ul-Mulk relinquished their claims over Bharuch, leaving the state largely independent.
+            In response, the Nizam informed Damaji Gaekwad that Bharuch was his personal possession and should not be disturbed. Consequently, Damaji withdrew the siege and marched toward Songadh. It is also recorded that Nek Alam Khan paid Damaji a share of the zakat collected in Bharuch, after which the Gaekwads began receiving a regular portion of this revenue.
           </Paragraph>
-          
+
         </motion.div>
 
         <Divider />
 
-        {/* --- CHAPTER 4: THE GOLDEN AGE & FALL --- */}
-        <motion.div 
+        {/* --- CHAPTER 4: THE MINTING RIGHTS --- */}
+
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-           <div className="flex justify-center mb-4 text-[#D4AF37]"><Map className="w-6 h-6" /></div>
-
-           <ChapterTitle 
-            date="1769 – 1772" 
-            title="The Last Nawab" 
-            subtitle="Muazzaz Khan & The Betrayal"
-          />
+          <ChapterTitle
+            date="1752"
+            title="The Minting Rights" subtitle={'The Decline of External Claims'} />
 
           <DropCapText>
-            Hamid Khan was succeeded by his son Muazzaz Khan, titled Imtiyaz-ud-Daula Muazzaz Khan Bahadur Dilerjung, the last independent Nawab of Bharuch. He added wells, tanks, fountains, reservoirs, and developed the gardens of Ahmed Bagh.
+            In 1748, with the permission of Emperor Ahmad Shah, a mint was established at Bharuch, and coins were issued in the city’s name.⁴ This represented a significant assertion of sovereignty. Mirza Beg Nek Alam Khan II died in 1752.
           </DropCapText>
 
           <Paragraph>
-            However, the state was lost in 1772, primarily due to the betrayal of <strong>Diwan Lallubhai</strong>. Originally from Ankleshwar, Lallubhai entered the Nawab’s administration and concentrated power in his hands. When the British attacked Bharuch, Lallubhai deliberately aided them, guiding their forces to breach the fort at the Katopur Gate.
+            He was succeeded briefly by his younger brother Khar Talab Khan, who ruled for only three months before his untimely death. During this short period, Hamid Khan, the grandson of Abdullah Beg through Mehmood Khan, was sent to Surat, owing to his youth and the unstable political situation.
           </Paragraph>
 
           <Paragraph>
-            Despite only 700 soldiers, Nawab Muazzaz Khan initially repelled the British and even killed Wedderburn during battle on 14 November 1772. However, acting on Lallubhai’s advice, the British eventually breached the fort. The Nawab defended the city for 36 hours, but treachery forced him to retreat. He passed away in exile, marking the end of independent Muslim rule in Bharuch.
+            Following these events, the descendants of Nizam-ul-Mulk relinquished their claims over Bharuch, except for the Gaekwads’ entitlement to a share of zakat, leaving the state largely independent.
+          </Paragraph>
+
+        </motion.div>
+
+        <Divider />
+
+        {/* --- CHAPTER 5: Nawab Rafi ud Daula --- */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <ChapterTitle
+            date="1756–1769"
+            title="Nawab Rafi-ud-Daula" subtitle={'Hamid Neknam Khan Bahadur'} />
+
+          <DropCapText>
+            Hamid Khan assumed the title Nawab Rafi-ud-Daula Hamid Neknam Khan Bahadur and ruled Bharuch from 1756 to 1769. His reign brought relative political stability after decades of internal strife. During this period, British influence also began to take root following the British capture of Surat in 1759, through which the British inherited the Nawab of Surat’s share of Bharuch’s zakat.
+          </DropCapText>
+
+          <Paragraph>
+            Between 1758 and 1759, Bharuch witnessed unrest caused by large groups of Gosains, who disturbed public order in and around the city. In 1761, Hamid Khan, with the assistance of Nawab Momin Khan of Khambhat, defeated Maratha forces near Jambusar and secured control of the town.
+          </Paragraph>
+
+          <Paragraph>
+            Hamid Khan died in 1769.
+          </Paragraph>
+
+        </motion.div>
+
+        <Divider />
+
+        {/* --- CHAPTER 6: Nawab Imtiyaz-ud-Daula --- */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <ChapterTitle
+            date="1769–1772"
+            title="Nawab Imtiyaz-ud-Daula" subtitle={'Muazzaz Khan Bahadur Dilerjung'} />
+
+          <DropCapText>
+            Hamid Khan was succeeded by his son Muazzaz Khan, titled Imtiyaz-ud-Daula Muazzaz Khan Bahadur Dilerjung, the last independent Nawab of Bharuch.
+          </DropCapText>
+
+          <Paragraph>
+            He added wells, tanks, fountains, reservoirs, and developed the gardens of Ahmed Bagh.
+            In 1771, after defeating British forces once, he was summoned to Bombay and honored with a 19-gun salute.
+            However, the state was lost in 1772, primarily due to the betrayal of Diwan Lallubhai, a clever administrator whose influence had grown considerably.
+          </Paragraph>
+
+          <Paragraph>
+            Hamid Khan died in 1769.
+          </Paragraph>
+
+        </motion.div>
+
+        <Divider />
+
+        {/* --- CHAPTER 7: Lallubhai and the Betrayal --- */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="flex justify-center mb-4 text-[#D4AF37]"><Map className="w-6 h-6" /></div>
+
+          <ChapterTitle
+            date="1773"
+            title="The Betrayal"
+            subtitle="Lallubhai"
+          />
+
+          <DropCapText>
+            Lallubhai, originally from Ankleshwar, inherited vast estates from his maternal uncle Bhaidas in 1767. He entered the Nawab’s administration as a Mutsaddi and eventually became Diwan, concentrating power in his hands by 1773.
+          </DropCapText>
+
+          <Paragraph>
+            When the British attacked Bharuch, Lallubhai deliberately aided them, guiding their forces to breach the fort at the Katopur Gate. Despite only 700 soldiers, Nawab Muazzaz Khan initially repelled the British and even killed Wedderburn during battle on 14 November 1772.
+          </Paragraph>
+
+          <Paragraph>
+            However, acting on Lallubhai’s advice, the British eventually breached the fort. The Nawab defended the city for 36 hours, but Lallubhai’s treachery forced him to retreat. Unable to maintain control, Muazzaz Khan fled toward Amod and later sought refuge near Dehewan, a small Koli princely state. Overburdened and heartbroken, he passed away in exile, marking the end of independent Muslim rule in Bharuch.
           </Paragraph>
         </motion.div>
 
         <Divider />
 
         {/* --- EPILOGUE: BRITISH ERA --- */}
-        <motion.div 
+        <motion.div
           className="bg-white p-8 md:p-12 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border border-[#D4AF37]/20 mt-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
           <div className="flex items-center gap-4 mb-6">
-             <Anchor className="text-[#0B2447] w-6 h-6" />
-             <h3 className={`${cinzel.className} text-2xl text-[#0B2447]`}>The Titular Nawabs (Post-1803)</h3>
+            <Anchor className="text-[#0B2447] w-6 h-6" />
+            <h3 className={`${cinzel.className} text-2xl text-[#0B2447]`}>The Titular Nawabs (Post-1803)</h3>
           </div>
-          
-          <Paragraph>
+
+          <DropCapText>
             After 1772, the British allowed the former Nawabs of Bharuch to retain their titles in a nominal capacity along with a Wazifa (allowance). They were recognized as titular and ex-Nawabs, meaning they retained noble status but had no political authority.
-          </Paragraph>
+          </DropCapText>
           <Paragraph>
-             Historical records indicate that Mirza Moazziz Khan, grandson of the last ruling Nawab Muazzaz Khan, was listed as Ex-Nawab of Bharuch in <em>The Indian Year Book</em>. This demonstrates the British practice of preserving titular status while consolidating administrative control.⁷
+            At the time of the acquisition of the District of Broach (Bharuch) by the East India Company in 1794, the Nawab owned approximately 1,621 bighas of garden land, known as wazifa land, situated near the town. To enable the Nawab’s four sons to discharge their debts, the Government of Bombay, with sanction from the Court of Directors of the East India Company, decided to distribute the revenues of these lands among them, rather than alienating the property. These revenues were termed wazifa allowances and were later treated as political pensions under British administration.
+          </Paragraph>
+
+          <Paragraph>
+            Following the Maratha War of 1803, when Bharuch formally became a British possession, the descendants of the last Nawab were formally granted hereditary pensions by the British Government. Biographical references such as Who’s Who – Indian Nobles note the continuation of these pensions well into the twentieth century
+          </Paragraph>
+
+          <Paragraph>
+            Historical records indicate that Mirza Moazziz Khan, grandson of the last ruling Nawab Muazzaz Khan, was listed as Ex-Nawab of Bharuch in The Indian Year Book. This demonstrates the British practice of preserving titular status while consolidating administrative control.
           </Paragraph>
         </motion.div>
 

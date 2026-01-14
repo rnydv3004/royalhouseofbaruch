@@ -2,62 +2,53 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Bell, ArrowRight, Scroll, Crown, Feather, FileText, HeartHandshake, Loader2, AlertCircle, Sparkles } from "lucide-react";
-import { montserrat, lato, cinzel, pinyon } from "@/app/fonts"; 
+import { montserrat, lato, cinzel, pinyon } from "@/app/fonts";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-// --- CONFIGURATION ---
-const CATEGORIES = [
-    { id: 'Announcement', label: 'Decrees', icon: Scroll },
-    { id: 'Honours', label: 'Honours', icon: Crown },
-    { id: 'Statements', label: 'Statements', icon: FileText },
-    { id: 'Trust', label: 'Trust', icon: HeartHandshake },
-];
-
 export const RoyalBulletin = () => {
     // --- STATE ---
-    const [activeTab, setActiveTab] = useState('Announcement');
     const [items, setItems] = useState<any[]>([]);
-    
+
     // Pagination & Loading State
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    const [loading, setLoading] = useState(false); // Initial tab load
+    const [loading, setLoading] = useState(false); // Initial load
     const [loadingMore, setLoadingMore] = useState(false); // Infinite scroll
     const [error, setError] = useState<string | null>(null);
 
     // --- INFINITE SCROLL OBSERVER ---
     const observer = useRef<IntersectionObserver | null>(null);
-    
+
     const lastElementRef = useCallback((node: HTMLDivElement) => {
         if (loading || loadingMore) return;
         if (observer.current) observer.current.disconnect();
-        
+
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
                 setPage(prevPage => prevPage + 1);
             }
         });
-        
+
         if (node) observer.current.observe(node);
     }, [loading, loadingMore, hasMore]);
 
 
     // --- API FETCH LOGIC ---
-    const fetchUpdates = async (currentPage: number, category: string, isLoadMore: boolean) => {
+    const fetchUpdates = async (currentPage: number, isLoadMore: boolean) => {
         try {
             if (isLoadMore) setLoadingMore(true);
             else setLoading(true);
             setError(null);
 
-            // CALL API
+            // CALL API - Always fetch 'All'
             const res = await fetch('/api/royal-updates', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    type: category, 
-                    page: currentPage, 
-                    limit: 6 
+                body: JSON.stringify({
+                    type: 'All',
+                    page: currentPage,
+                    limit: 8 // Slightly larger batch for a single feed
                 })
             });
 
@@ -70,196 +61,181 @@ export const RoyalBulletin = () => {
                 setHasMore(false);
             } else {
                 setItems(prev => isLoadMore ? [...prev, ...newItems] : newItems);
-                if (newItems.length < 6) setHasMore(false);
+                if (newItems.length < 8) setHasMore(false);
             }
 
         } catch (err) {
             console.error("Bulletin Error:", err);
-            setError("The archives are temporarily closed.");
+            setError("The royal archives are temporarily unavailable.");
         } finally {
             setLoading(false);
             setLoadingMore(false);
         }
     };
 
-    // --- EFFECT: TAB CHANGE (RESET & FETCH) ---
+    // --- EFFECT: INITIAL LOAD ---
     useEffect(() => {
+        // Initial fetch
         setItems([]);
         setPage(1);
         setHasMore(true);
-        fetchUpdates(1, activeTab, false);
-    }, [activeTab]);
+        fetchUpdates(1, false);
+    }, []);
 
     // --- EFFECT: SCROLL (APPEND) ---
     useEffect(() => {
         if (page > 1) {
-            fetchUpdates(page, activeTab, true);
+            fetchUpdates(page, true);
         }
     }, [page]);
 
 
+    // --- ICONS MAPPING ---
+    const getIcon = (type: string) => {
+        switch (type) {
+            case 'Announcement': return <Scroll size={16} />;
+            case 'Honours': return <Crown size={16} />;
+            case 'Statements': return <Feather size={16} />;
+            case 'Trust': return <HeartHandshake size={16} />;
+            default: return <FileText size={16} />;
+        }
+    };
+
+
     // --- RENDER ---
     return (
-        <section className="bg-[#051124] relative z-20 py-16 overflow-hidden border-y border-[#D4AF37]/20">
-            
-            {/* Custom Scrollbar Styles for this section */}
+        <section className="bg-[#051124] relative z-20 py-24 overflow-hidden border-y border-[#D4AF37]/20">
+
+            {/* Custom Scrollbar Styles */}
             <style jsx global>{`
                 .royal-scroll::-webkit-scrollbar {
-                    width: 6px;
+                    width: 4px;
                 }
                 .royal-scroll::-webkit-scrollbar-track {
-                    background: rgba(11, 36, 71, 0.4);
-                    border-radius: 4px;
+                    background: rgba(11, 36, 71, 0.2);
                 }
                 .royal-scroll::-webkit-scrollbar-thumb {
-                    background: rgba(212, 175, 55, 0.4); 
-                    border-radius: 4px;
+                    background: rgba(212, 175, 55, 0.3); 
+                    border-radius: 2px;
                 }
                 .royal-scroll::-webkit-scrollbar-thumb:hover {
                     background: rgba(212, 175, 55, 0.8); 
                 }
             `}</style>
 
-            {/* Background Texture (Subtle Pattern) */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-                 style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}>
+            {/* Background Texture - Royal Pattern */}
+            <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='1'%3E%3Cpath d='M40 0l40 40-40 40L0 40z' opacity='0.5'/%3E%3Cpath d='M40 10l30 30-30 30L10 40z' opacity='0.3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}>
             </div>
 
             <div className="container mx-auto px-4 lg:px-16 relative z-10">
 
-                {/* --- 1. HEADER (Static) --- */}
-                <div className="text-center mb-10">
-                    <motion.div 
+                {/* --- 1. HEADER (Redesigned) --- */}
+                <div className="text-center mb-16">
+                    <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div className="flex justify-center items-center gap-4 mb-3">
-                            <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]"></div>
-                            <Feather className="text-[#D4AF37] w-6 h-6" />
-                            <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]"></div>
+                        <div className="flex justify-center items-center gap-6 mb-4">
+                            <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
+                            <Crown className="text-[#D4AF37] w-8 h-8 drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]" strokeWidth={1} />
+                            <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
                         </div>
-                        <h2 className={`${cinzel.className} text-3xl md:text-5xl text-white font-bold tracking-tight mb-2 drop-shadow-lg`}>
-                            Royal <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#D4AF37]">Gazette</span>
+
+                        <h2 className={`${cinzel.className} text-4xl md:text-6xl text-white font-normal uppercase tracking-[0.1em] mb-4`}>
+                            House <span className="text-[#D4AF37]">Announcements</span>
                         </h2>
-                        <p className={`${pinyon.className} text-[#D4AF37]/80 text-xl md:text-2xl`}>
-                            Chronicles of the Realm
+
+                        <p className={`${montserrat.className} text-[#D4AF37]/70 text-sm md:text-base font-medium tracking-[0.2em] uppercase`}>
+                            Official Communications of the Royal House of Bharuch
                         </p>
                     </motion.div>
                 </div>
 
-                {/* --- 2. MAGIC TABS (Static) --- */}
-                <div className="flex flex-wrap justify-center gap-4 mb-10">
-                    {CATEGORIES.map((cat) => {
-                        const isActive = activeTab === cat.id;
-                        return (
-                            <button
-                                key={cat.id}
-                                onClick={() => setActiveTab(cat.id)}
-                                className="relative px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300"
-                            >
-                                {/* Animated Background Slider */}
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="activeTab"
-                                        className="absolute inset-0 bg-[#D4AF37] rounded-full shadow-[0_0_20px_rgba(212,175,55,0.4)]"
-                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                    />
-                                )}
-                                
-                                {/* Text Content */}
-                                <span className={`relative z-10 flex items-center gap-2 ${isActive ? 'text-[#051124]' : 'text-[#D4AF37]/60 hover:text-[#D4AF37]'}`}>
-                                    <cat.icon size={14} />
-                                    <span className={cinzel.className}>{cat.label}</span>
-                                </span>
-                            </button>
-                        );
-                    })}
-                </div>
 
-                {/* --- 3. THE SCROLLABLE GRID CONTAINER --- */}
-                {/* This container has a fixed height (h-[600px] on desktop) 
-                    and overflow-y-auto to create the internal scroll. 
-                */}
-                <div className="max-w-6xl mx-auto h-[500px] md:h-[600px] overflow-y-auto royal-scroll pr-2 md:pr-4">
-                    
+                {/* --- 2. THE FEED --- */}
+                {/* Fixed height container for internal scrolling */}
+                <div className="max-w-6xl mx-auto h-[600px] overflow-y-auto royal-scroll pr-4">
+
                     {/* Error Message */}
                     {error && (
-                        <div className="flex items-center justify-center p-6 bg-red-900/10 border border-red-500/30 text-red-200 rounded-lg">
+                        <div className="flex items-center justify-center p-6 bg-red-900/10 border border-red-500/30 text-red-200 rounded-sm mb-8">
                             <AlertCircle className="mr-3" /> {error}
                         </div>
                     )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pb-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
                         <AnimatePresence mode="popLayout">
                             {items && items.map((item, index) => {
                                 const isLastElement = items.length === index + 1;
 
                                 return (
                                     <motion.div
-                                        key={`${item.id}-${index}`} // Unique key
+                                        key={`${item.id}-${index}`}
                                         ref={isLastElement ? lastElementRef : null}
                                         layout
-                                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                                        exit={{ opacity: 0, scale: 0.9 }}
-                                        transition={{ duration: 0.4, delay: index * 0.05 }} // Stagger effect
-                                        className="group relative"
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ duration: 0.4, delay: index * 0.05 }}
+                                        className="relative group h-full"
                                     >
-                                        {/* CARD CONTAINER */}
-                                        <div className="h-full bg-[#0B2447]/60 backdrop-blur-md border border-[#D4AF37]/20 p-6 md:p-8 rounded-xl overflow-hidden hover:border-[#D4AF37]/60 transition-all duration-500 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] hover:-translate-y-1 cursor-default">
-                                            
-                                            {/* Glow Gradient on Hover */}
-                                            <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                        {/* CARD */}
+                                        <div className="bg-[#0B2447]/40 backdrop-blur-sm border border-[#D4AF37]/10 p-6 rounded-sm hover:border-[#D4AF37]/40 transition-all duration-500 hover:bg-[#0B2447]/60 group relative overflow-hidden h-full flex flex-col">
 
-                                            {/* HEADER: Date & Badge */}
-                                            <div className="relative flex justify-between items-start mb-6">
-                                                <div className="flex flex-col">
-                                                    <span className={`${montserrat.className} text-[10px] font-bold text-[#D4AF37]/60 uppercase tracking-[0.2em] mb-1`}>
-                                                        {item.type}
-                                                    </span>
-                                                    <span className={`${lato.className} text-slate-400 text-sm italic`}>
+                                            {/* Decorative Corner */}
+                                            <div className="absolute top-0 right-0 p-2 opacity-50">
+                                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M0 0H20V20" stroke="#D4AF37" strokeWidth="1" strokeOpacity="0.3" />
+                                                </svg>
+                                            </div>
+
+                                            <div className="flex flex-col h-full">
+                                                {/* Header: Type & Date */}
+                                                <div className="flex justify-between items-start mb-4 border-b border-[#D4AF37]/10 pb-3">
+                                                    <div className="flex items-center gap-2 text-[#D4AF37]/80">
+                                                        {getIcon(item.type)}
+                                                        <span className={`${montserrat.className} text-[10px] uppercase tracking-widest font-bold`}>
+                                                            {item.type}
+                                                        </span>
+                                                    </div>
+                                                    <span className={`${cinzel.className} text-white/40 text-xs`}>
                                                         {item.date}
                                                     </span>
                                                 </div>
-                                                
-                                                {/* "NEW" WAX SEAL BADGE */}
-                                                {item.isNew && (
-                                                    <div className="flex items-center gap-1 bg-red-900/30 border border-red-500/30 px-3 py-1 rounded-full animate-pulse">
-                                                        <Sparkles size={10} className="text-red-400" />
-                                                        <span className={`${montserrat.className} text-[9px] font-bold text-red-300 uppercase tracking-widest`}>New</span>
-                                                    </div>
-                                                )}
-                                            </div>
 
-                                            {/* BODY */}
-                                            <div className="relative z-10">
-                                                <h3 className={`${cinzel.className} text-xl text-white mb-4 leading-snug group-hover:text-[#D4AF37] transition-colors duration-300`}>
+                                                {/* Title */}
+                                                <h3 className={`${cinzel.className} text-xl text-white mb-3 group-hover:text-[#D4AF37] transition-colors leading-snug`}>
                                                     {item.title}
                                                 </h3>
-                                                
+
+                                                {/* Content Preeview */}
                                                 {item.content && (
-                                                    <p className={`${lato.className} text-slate-400 leading-relaxed mb-6 line-clamp-3 text-sm group-hover:text-slate-300`}>
+                                                    <p className={`${lato.className} text-slate-400 font-light leading-relaxed text-sm mb-6 line-clamp-3 grow`}>
                                                         {item.content}
                                                     </p>
                                                 )}
 
-                                                {/* ACTION */}
-                                                <div className="pt-6 border-t border-[#D4AF37]/10 flex justify-end">
+                                                {/* Footer: Action & New Badge */}
+                                                <div className="mt-auto flex justify-between items-center pt-4 border-t border-[#D4AF37]/5">
                                                     {item.link ? (
-                                                        <Link href={item.link} className="flex items-center gap-2 text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] group/btn">
-                                                            <span>{item.actionText || 'Read Full Decree'}</span>
-                                                            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                                                        <Link href={item.link} className="inline-flex items-center gap-2 text-[#D4AF37] text-[10px] font-bold uppercase tracking-[0.2em] group/btn hover:text-white transition-colors">
+                                                            <span>{item.actionText || 'Read'}</span>
+                                                            <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
                                                         </Link>
                                                     ) : (
-                                                        <div className="h-px w-8 bg-[#D4AF37]/30"></div>
+                                                        <span></span>
+                                                    )}
+
+                                                    {item.isNew && (
+                                                        <span className="bg-red-900/30 text-red-300 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 uppercase tracking-wider animate-pulse">
+                                                            New
+                                                        </span>
                                                     )}
                                                 </div>
                                             </div>
 
-                                            {/* DECORATIVE CORNER */}
-                                            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-[#D4AF37]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-3xl"></div>
                                         </div>
                                     </motion.div>
                                 );
@@ -267,59 +243,34 @@ export const RoyalBulletin = () => {
                         </AnimatePresence>
                     </div>
 
-                    {/* --- SCROLLABLE AREA LOADERS --- */}
-                    
-                    {/* Initial Skeleton (Inside scroll area) */}
-                    {loading && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* --- LOADERS --- */}
+
+                    {/* Initial Skeleton */}
+                    {loading && items.length === 0 && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
                             {[1, 2, 3, 4].map(i => (
-                                <div key={i} className="h-64 bg-[#0B2447]/40 border border-[#D4AF37]/10 rounded-xl p-8 animate-pulse">
-                                    <div className="flex justify-between mb-6">
-                                        <div className="h-3 w-20 bg-[#D4AF37]/10 rounded"></div>
-                                        <div className="h-3 w-12 bg-[#D4AF37]/10 rounded"></div>
-                                    </div>
-                                    <div className="h-6 w-3/4 bg-[#D4AF37]/10 rounded mb-4"></div>
-                                    <div className="h-3 w-full bg-[#D4AF37]/5 rounded mb-2"></div>
-                                    <div className="h-3 w-2/3 bg-[#D4AF37]/5 rounded"></div>
-                                </div>
+                                <div key={i} className="bg-[#0B2447]/20 border border-[#D4AF37]/5 p-8 rounded-sm animate-pulse h-64"></div>
                             ))}
                         </div>
                     )}
 
+
                     {/* Load More Spinner */}
                     {loadingMore && (
-                        <div className="flex justify-center py-6">
-                            <div className="flex flex-col items-center gap-2">
+                        <div className="flex justify-center py-12">
+                            <div className="flex flex-col items-center gap-3 opacity-70">
                                 <Loader2 className="animate-spin text-[#D4AF37] w-6 h-6" />
-                                <span className={`${cinzel.className} text-[#D4AF37] text-[10px] tracking-widest`}>Fetching Archives...</span>
                             </div>
                         </div>
-                    )}
-
-                    {/* Empty State */}
-                    {!loading && items.length === 0 && !error && (
-                        <motion.div 
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                            className="text-center py-20 border border-dashed border-[#D4AF37]/20 rounded-xl bg-[#0B2447]/30"
-                        >
-                            <Bell className="w-12 h-12 text-[#D4AF37]/20 mx-auto mb-4" />
-                            <h3 className={`${cinzel.className} text-white text-xl`}>No Updates Found</h3>
-                            <p className={`${lato.className} text-slate-500 mt-2`}>The Royal Scribe has nothing to report for this category.</p>
-                        </motion.div>
                     )}
 
                     {/* End of List */}
                     {!hasMore && !loading && items.length > 0 && (
-                        <div className="text-center py-10 opacity-50">
-                            <div className="flex items-center justify-center gap-4 mb-2">
-                                <div className="h-px w-12 bg-[#D4AF37]"></div>
-                                <Crown className="w-3 h-3 text-[#D4AF37]" />
-                                <div className="h-px w-12 bg-[#D4AF37]"></div>
-                            </div>
-                            <p className={`${cinzel.className} text-[#D4AF37] text-[10px] tracking-[0.3em] uppercase`}>End of Bulletin</p>
+                        <div className="text-center py-16 opacity-40">
+                            <Feather className="w-6 h-6 text-[#D4AF37] mx-auto mb-4" />
+                            <p className={`${cinzel.className} text-[#D4AF37] text-xs tracking-[0.3em] uppercase`}>End of Official Records</p>
                         </div>
                     )}
-
                 </div>
             </div>
         </section>
