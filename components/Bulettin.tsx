@@ -139,12 +139,12 @@ export const RoyalBulletin = () => {
                         transition={{ duration: 0.8 }}
                     >
                         <div className="flex justify-center items-center gap-6 mb-4">
-                            <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
+                            <div className="h-px w-20 bg-linear-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
                             <Crown className="text-[#D4AF37] w-8 h-8 drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]" strokeWidth={1} />
-                            <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
+                            <div className="h-px w-20 bg-linear-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
                         </div>
 
-                        <h2 className={`${cinzel.className} text-4xl md:text-6xl text-white font-normal uppercase tracking-[0.1em] mb-4`}>
+                        <h2 className={`${cinzel.className} text-4xl md:text-6xl text-white font-normal uppercase tracking-widest mb-4`}>
                             House <span className="text-[#D4AF37]">Announcements</span>
                         </h2>
 
