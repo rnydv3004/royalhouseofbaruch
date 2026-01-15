@@ -5,28 +5,28 @@ import { cinzel, montserrat, lato } from "@/app/fonts"; // Assuming these are yo
 // --- 1. Decorative Background Component ---
 const BackgroundDecoration = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
-    
+
     {/* 1. Subtle Paper Texture / Noise (Optional grain) */}
     <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] mix-blend-multiply"></div>
 
     {/* 2. Islamic/Mughal Geometric Grid Pattern */}
-    <div className="absolute inset-0 opacity-[0.03]" 
-         style={{ 
-             backgroundImage: 'radial-gradient(#0B2447 1px, transparent 1px)', 
-             backgroundSize: '30px 30px' 
-         }}>
+    <div className="absolute inset-0 opacity-[0.03]"
+      style={{
+        backgroundImage: 'radial-gradient(#0B2447 1px, transparent 1px)',
+        backgroundSize: '30px 30px'
+      }}>
     </div>
 
     {/* 3. Large Ornamental Circle (Top Right) */}
     <div className="absolute -top-20 -right-20 w-[600px] h-[600px] opacity-[0.04]">
-       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full animate-[spin_60s_linear_infinite]">
-         <path fill="#D4AF37" d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.2,-19.2,95.8,-5.2C93.4,8.9,81.8,22.2,70.6,33.4C59.4,44.6,48.6,53.8,36.7,60.8C24.8,67.8,11.8,72.6,-0.8,74C-13.4,75.4,-26,73.4,-37.2,65.8C-48.4,58.2,-58.2,45,-65.4,30.8C-72.6,16.6,-77.2,1.4,-75.6,-13.2C-74,-27.8,-66.2,-41.8,-54.6,-50.2C-43,-58.6,-27.6,-61.4,-13.3,-63.3C1,-65.2,16,-66.2,30.5,-83.6L44.7,-76.4Z" transform="translate(100 100) scale(1.1)" />
-       </svg>
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full animate-[spin_60s_linear_infinite]">
+        <path fill="#D4AF37" d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.2,-19.2,95.8,-5.2C93.4,8.9,81.8,22.2,70.6,33.4C59.4,44.6,48.6,53.8,36.7,60.8C24.8,67.8,11.8,72.6,-0.8,74C-13.4,75.4,-26,73.4,-37.2,65.8C-48.4,58.2,-58.2,45,-65.4,30.8C-72.6,16.6,-77.2,1.4,-75.6,-13.2C-74,-27.8,-66.2,-41.8,-54.6,-50.2C-43,-58.6,-27.6,-61.4,-13.3,-63.3C1,-65.2,16,-66.2,30.5,-83.6L44.7,-76.4Z" transform="translate(100 100) scale(1.1)" />
+      </svg>
     </div>
 
     {/* 4. Large Ornamental Circle (Bottom Left) */}
     <div className="absolute -bottom-40 -left-20 w-[500px] h-[500px] opacity-[0.04]">
-        <div className="w-full h-full border-[40px] border-[#D4AF37] rounded-full border-dashed"></div>
+      <div className="w-full h-full border-[40px] border-[#D4AF37] rounded-full border-dashed"></div>
     </div>
 
     {/* 5. Center Glow */}
@@ -45,15 +45,15 @@ const Lineage = () => {
   const chronicle = [
     {
       year: "1726",
-      ruler: "Nawab Abdullah Beg",
-      title: "The First Nawab",
-      desc: "Appointed by Nizam-ul-Mulk, Abdullah Beg established hereditary rule in Bharuch. As Mughal control waned in Gujarat, he exercised effective autonomy."
+      ruler: "Abdulla Beg (Nek Alam Khan I)",
+      title: "Founder of the Royal House of Bharuch",
+      desc: "Abdullah Beg was appointed Faujdar of Bharuch in 1726 by Nizam-ul-Mulk Asaf Jah I, the founder of the Hyderabad State.On this appointment, he was granted the noble title “Nek Alam Khan. This marked the beginning of hereditary authority of the House of Bharuch under imperial sanction. Although he passed away before fully assuming office, his appointment and title were officially recorded, and his house was recognised as a noble ruling lineage."
     },
     {
       year: "1736",
-      ruler: "Nawab Mirza Beg",
-      title: "Diplomacy & Strength",
-      desc: "Ascending the throne amidst growing Maratha power, Mirza Beg maintained political autonomy. He arranged the cremation of Bajirao Peshwa with full honors."
+      ruler: "Nawab Mirza Beg (Nek Alam Khan II)",
+      title: "First Ruling Nawab of Bharuch",
+      desc: "In 1736, Mirza Beg, the younger son of Abdullah Beg, was formally invested as Nawab of Bharuch and granted the hereditary title “Nek Alam Khan II. Under his leadership, the House of Bharuch became a sovereign-ruling Nawabi House, maintaining political authority while balancing Mughal, Maratha and regional powers. From this point onward, the Nawabs of Bharuch ruled as a recognized princely and noble dynasty."
     },
     {
       year: "1741",
@@ -88,16 +88,16 @@ const Lineage = () => {
   ];
 
   // Placeholder for SectionHeading if not imported
-  const SectionHeading = ({ title, subtitle } : { title: string; subtitle: string }) => (
+  const SectionHeading = ({ title, subtitle }: { title: string; subtitle: string }) => (
     <div className="text-center mb-16 relative z-20">
-       <span className={`${montserrat.className} text-[#D4AF37] text-xs font-bold uppercase tracking-[0.3em]`}>{subtitle}</span>
-       <h2 className={`${cinzel.className} text-4xl md:text-5xl text-[#0B2447] mt-3`}>{title}</h2>
+      <span className={`${montserrat.className} text-[#D4AF37] text-xs font-bold uppercase tracking-[0.3em]`}>{subtitle}</span>
+      <h2 className={`${cinzel.className} text-4xl md:text-5xl text-[#0B2447] mt-3`}>{title}</h2>
     </div>
   );
 
   return (
     <section id="history" ref={containerRef} className="py-24 md:py-32 bg-[#FDFBF7] relative overflow-hidden">
-      
+
       {/* --- ADDED BACKGROUND DECORATION --- */}
       <BackgroundDecoration />
 
@@ -142,7 +142,7 @@ const Lineage = () => {
                     ${idx % 2 === 0 ? 'md:text-left' : 'md:text-right'} text-center md:text-left
                     rounded-sm
                   `}>
-                  
+
                   {/* Decorative corner accents for the card */}
                   <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37] opacity-30 group-hover:opacity-100 transition-opacity"></div>
                   <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#D4AF37] opacity-30 group-hover:opacity-100 transition-opacity"></div>
