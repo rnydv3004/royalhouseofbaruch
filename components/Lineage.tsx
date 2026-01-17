@@ -45,45 +45,57 @@ const Lineage = () => {
   const chronicle = [
     {
       year: "1726",
-      ruler: "Abdulla Beg (Nek Alam Khan I)",
-      title: "Founder of the Royal House of Bharuch",
-      desc: "Abdullah Beg was appointed Faujdar of Bharuch in 1726 by Nizam-ul-Mulk Asaf Jah I, the founder of the Hyderabad State.On this appointment, he was granted the noble title “Nek Alam Khan. This marked the beginning of hereditary authority of the House of Bharuch under imperial sanction. Although he passed away before fully assuming office, his appointment and title were officially recorded, and his house was recognised as a noble ruling lineage."
+      ruler: "Abdullah Beg (Nek Alam Khan I)",
+      title: "Founder of the Nawabi House of Bharuch",
+      desc: "In 1726, Nizam-ul-Mulk, Asaf Jah I, appointed Abdullah Beg as Faujdar (Governor) of Bharuch and granted him the noble title Nek Alam Khan. With the weakening of Mughal authority in Gujarat, Abdullah Beg exercised effective autonomy, laying the foundation of hereditary Nawabi rule in Bharuch. His appointment and title were officially recorded, marking the beginning of the Royal House of Bharuch."
     },
     {
       year: "1736",
-      ruler: "Nawab Mirza Beg (Nek Alam Khan II)",
-      title: "First Ruling Nawab of Bharuch",
-      desc: "In 1736, Mirza Beg, the younger son of Abdullah Beg, was formally invested as Nawab of Bharuch and granted the hereditary title “Nek Alam Khan II. Under his leadership, the House of Bharuch became a sovereign-ruling Nawabi House, maintaining political authority while balancing Mughal, Maratha and regional powers. From this point onward, the Nawabs of Bharuch ruled as a recognized princely and noble dynasty."
+      ruler: "Mirza Beg (Nek Alam Khan II)",
+      title: "Second Nawab of Bharuch",
+      desc: "Following the death of Abdullah Beg, his second son Mirza Beg ascended the throne and adopted the title Nek Alam Khan II. His reign coincided with increasing Maratha influence, yet Bharuch retained its political autonomy."
+    },
+    {
+      year: "1740",
+      ruler: "Regional Balance",
+      title: "Diplomacy with the Marathas",
+      desc: "After the death of Bajirao Peshwa, Nek Alam Khan II arranged his cremation with full honours on the banks of the Narmada at Rawal Khedi, reflecting diplomatic prudence and regional balance."
     },
     {
       year: "1741",
       ruler: "The Great Defence",
-      title: "Siege of Bharuch",
-      desc: "When Damaji Gaekwad laid siege to the city, the Nizam intervened, declaring Bharuch his personal possession. The siege was withdrawn."
+      title: "The Siege of Bharuch",
+      desc: "Damaji Gaekwad laid siege to Bharuch. Nek Alam Khan II appealed to the Nizam, who declared Bharuch his personal possession. The siege was withdrawn, preserving Bharuch’s autonomy."
     },
     {
       year: "1748",
-      ruler: "Sovereignty Asserted",
-      title: "The Royal Mint",
-      desc: "With the permission of Emperor Ahmad Shah, a mint was established at Bharuch. Coins were issued in the city's name—a definitive symbol of sovereignty."
+      ruler: "Sovereign Authority",
+      title: "The Royal Mint of Bharuch",
+      desc: "With the permission of Emperor Ahmad Shah, a royal mint was established at Bharuch. Coins were struck in the city’s name — a formal symbol of sovereign authority."
     },
     {
-      year: "1756",
-      ruler: "Nawab Hamid Khan",
-      title: "Restoration of Order",
-      desc: "After a succession dispute, Hamid Khan ascended the throne, bringing stability. He defeated Maratha forces near Jambusar in 1761."
+      year: "1756-69",
+      ruler: "Nawab Rafi-ud-Daula Hamid Neknam Khan Bahadur",
+      title: "Restoration of Stability",
+      desc: "Hamid Khan, the rightful heir, ascended the throne after a period of dispute. His reign restored stability, strengthened governance, and defended Bharuch against Maratha pressure, notably securing Jambusar in 1761."
     },
     {
-      year: "1769",
-      ruler: "Nawab Muazzaz Khan",
-      title: "The Last Independent Ruler",
-      desc: "A patron of development, he built the Ahmed Bagh gardens. His reign ended due to the betrayal of his Diwan, Lallubhai."
+      year: "1769-72",
+      ruler: "Nawab Imtiyaz-ud-Daula Muazzaz Khan Bahadur",
+      title: "The Last Ruling Nawab",
+      desc: "He developed Bharuch through wells, fountains and the famous Ahmed Bagh gardens. In 1771, after defeating British forces, he was honoured with a 19-gun salute in Bombay. In 1772, Bharuch Nawabi was lost due to the betrayal of Diwan Lallubhai."
     },
     {
-      year: "1803",
-      ruler: "Titular Legacy",
-      title: "The Hereditary Pensioners",
-      desc: "The British recognized the descendants as Titular Nawabs. The family retained their noble status and served as custodians of heritage."
+      year: "1803+",
+      ruler: "Titular Nawabs of Bharuch",
+      title: "Custodians of Heritage",
+      desc: "The British recognised the family as Titular Nawabs, granting hereditary Wazifa (pensions) while preserving their noble status. The Royal House remained the custodian of Bharuch’s heritage and lineage."
+    },
+    {
+      year: "Legacy",
+      ruler: "The Royal House Today",
+      title: "Preserving the Tradition",
+      desc: "The descendants of the Nawabs of Bharuch continue as the Royal House of Bharuch, preserving history, heritage, titles, and cultural identity of one of Gujarat’s most distinguished noble houses."
     }
   ];
 

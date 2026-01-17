@@ -80,7 +80,7 @@ export default function HistoryPage() {
         </div>
 
         {/* Background Radial Gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4AF37]/10 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-[#D4AF37]/10 via-transparent to-transparent"></div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -89,7 +89,7 @@ export default function HistoryPage() {
           className="relative z-10"
         >
           <div className="flex flex-col items-center gap-4 mb-8">
-            <div className="w-px h-16 bg-gradient-to-b from-transparent to-[#0B2447]"></div>
+            <div className="w-px h-16 bg-linear-to-b from-transparent to-[#0B2447]"></div>
             <Crown className="text-[#D4AF37] w-8 h-8" strokeWidth={1} />
           </div>
 
@@ -121,6 +121,8 @@ export default function HistoryPage() {
 
         {/* --- CHAPTER 1: THE FOUNDATION --- */}
         <motion.div
+          id="foundation"
+          className="scroll-mt-32"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -152,6 +154,8 @@ export default function HistoryPage() {
 
         {/* --- CHAPTER 2: MARATHA RELATIONS --- */}
         <motion.div
+          id="diplomacy"
+          className="scroll-mt-32"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -186,6 +190,8 @@ export default function HistoryPage() {
 
         {/* --- CHAPTER 3: SOVEREIGNTY --- */}
         <motion.div
+          id="sovereignty"
+          className="scroll-mt-32"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -293,6 +299,8 @@ export default function HistoryPage() {
 
         {/* --- CHAPTER 7: Lallubhai and the Betrayal --- */}
         <motion.div
+          id="betrayal"
+          className="scroll-mt-32"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -323,7 +331,8 @@ export default function HistoryPage() {
 
         {/* --- EPILOGUE: BRITISH ERA --- */}
         <motion.div
-          className="bg-white p-8 md:p-12 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border border-[#D4AF37]/20 mt-8"
+          id="titular"
+          className="bg-white p-8 md:p-12 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border border-[#D4AF37]/20 mt-8 scroll-mt-32"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

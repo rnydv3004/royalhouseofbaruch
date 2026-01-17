@@ -49,12 +49,52 @@ const Navbar = () => {
         if (shouldBeScrolled !== isScrolled) setIsScrolled(shouldBeScrolled);
     });
 
-    const menuItems = [
+    // --- MENU DATA ---
+    type MenuItem = {
+        name: string;
+        href: string;
+        subItems?: { name: string; href: string }[];
+    };
+
+    const menuItems: MenuItem[] = [
         { name: "Home", href: "/" },
-        { name: "Gallery", href: "/gallery" },
-        { name: "Honours", href: "/honours" },
-        { name: "History", href: "/history" },
-        { name: "About", href: "/about" },
+        // {
+        //     name: "Gallery",
+        //     href: "/gallery",
+        //     subItems: [
+        //         { name: "Events", href: "/gallery#events" },
+        //         { name: "Portraits", href: "/gallery#portraits" },
+        //         { name: "Estates", href: "/gallery#estates" },
+        //     ]
+        // },
+        {
+            name: "Honours",
+            href: "/honours",
+            subItems: [
+                { name: "Nobility", href: "/honours#nobility" },
+                { name: "Royal Order of the Lion", href: "/honours#lion" },
+                { name: "Order of the Star of Barygaza", href: "/honours#barygaza" },
+            ]
+        },
+        {
+            name: "History",
+            href: "/history",
+            subItems: [
+                { name: "Foundation", href: "/history#foundation" },
+                { name: "Diplomacy", href: "/history#diplomacy" },
+                { name: "Sovereignty", href: "/history#sovereignty" },
+                { name: "The Betrayal", href: "/history#betrayal" },
+                { name: "Titular Era", href: "/history#titular" },
+            ]
+        },
+        { name: "Administration", href: "/administration" },
+        {
+            name: "About", href: "/about", subItems: [
+                { name: "Coat of Arms", href: "/about#coat-of-arms" },
+                { name: "Succession", href: "/about#succession" },
+                { name: "Family Tree", href: "/about#family-tree" },
+            ]
+        },
         { name: "Contact", href: "/contact" },
     ];
 
@@ -150,7 +190,7 @@ const Navbar = () => {
                             animate={{ x: "0%", clipPath: "polygon(0% 0, 100% 0, 100% 100%, -20% 100%)" }}
                             exit={{ x: "100%", clipPath: "polygon(20% 0, 100% 0, 100% 100%, 0% 100%)" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="absolute right-0 top-0 bottom-0 w-[90%] bg-[#FDFBF7] shadow-2xl flex flex-col pl-16 pr-6 py-10"
+                            className="absolute right-0 top-0 bottom-0 w-[90%] bg-[#FDFBF7] shadow-2xl flex flex-col pl-16 pr-6 py-10 overflow-y-auto no-scrollbar"
                         >
                             {/* Close Button */}
                             <button
@@ -163,22 +203,45 @@ const Navbar = () => {
                             {/* Menu Links */}
                             <div className="flex flex-col gap-8">
                                 {menuItems.map((item, i) => (
-                                    <motion.a
-                                        key={item.name}
-                                        href={item.href}
-                                        initial={{ opacity: 0, x: 50 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.2 + (i * 0.1) }}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="group relative"
-                                    >
-                                        <span className={`${cinzel.className} text-3xl text-[#0B2447] font-medium group-hover:text-[#D4AF37] transition-colors`}>
-                                            {item.name}
-                                        </span>
-                                        <span className="block text-[10px] uppercase tracking-[0.3em] text-gray-400 group-hover:text-[#D4AF37] mt-1 transition-colors">
-                                            Explore
-                                        </span>
-                                    </motion.a>
+                                    <div key={item.name} className="flex flex-col">
+                                        <motion.a
+                                            href={item.href}
+                                            initial={{ opacity: 0, x: 50 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.2 + (i * 0.1) }}
+                                            onClick={() => setMobileMenuOpen(false)}
+                                            className="group relative"
+                                        >
+                                            <span className={`${cinzel.className} text-3xl text-[#0B2447] font-medium group-hover:text-[#D4AF37] transition-colors`}>
+                                                {item.name}
+                                            </span>
+                                            {/* Only show 'Explore' if no subitems, or keep it consistent? Let's remove it for cleaner look with subitems or keep straightforward */}
+                                            {!item.subItems && (
+                                                <span className="block text-[10px] uppercase tracking-[0.3em] text-gray-400 group-hover:text-[#D4AF37] mt-1 transition-colors">
+                                                    Explore
+                                                </span>
+                                            )}
+                                        </motion.a>
+
+                                        {/* --- MOBILE SUB-ITEMS (ALWAYS VISIBLE) --- */}
+                                        {item.subItems && (
+                                            <div className="flex flex-col gap-3 mt-3 ml-4 border-l border-[#D4AF37]/30 pl-4">
+                                                {item.subItems.map((sub, j) => (
+                                                    <motion.a
+                                                        key={sub.name}
+                                                        href={sub.href}
+                                                        initial={{ opacity: 0, x: 20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: 0.3 + (i * 0.1) + (j * 0.05) }}
+                                                        onClick={() => setMobileMenuOpen(false)}
+                                                        className={`${montserrat.className} text-sm font-medium text-gray-600 hover:text-[#D4AF37] hover:translate-x-1 transition-all uppercase tracking-wide`}
+                                                    >
+                                                        {sub.name}
+                                                    </motion.a>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
                                 ))}
                             </div>
 
@@ -205,21 +268,58 @@ const NavLink = ({ item }: { item: any }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <a
-            href={item.href}
-            className="relative px-2 py-4 group cursor-pointer"
+        <div
+            className="relative group h-full flex items-center"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <span className={`${montserrat.className} text-[11px] font-bold uppercase tracking-[0.2em] text-[#0B2447] group-hover:text-[#8B1E1E] transition-colors duration-300`}>
-                {item.name}
-            </span>
+            <a
+                href={item.href}
+                className="relative px-2 py-4 cursor-pointer block"
+            >
+                <div className="flex items-center gap-1">
+                    <span className={`${montserrat.className} text-[11px] font-bold uppercase tracking-[0.2em] text-[#0B2447] group-hover:text-[#8B1E1E] transition-colors duration-300`}>
+                        {item.name}
+                    </span>
+                    {/* Optional chevron if there are subitems */}
+                    {item.subItems && (
+                        <span className="text-[#0B2447] group-hover:text-[#8B1E1E] transition-colors duration-300 text-[10px]">▼</span>
+                    )}
+                </div>
 
-            {/* Animated Gold Vine SVG */}
-            <AnimatePresence>
-                {isHovered && <HoverFlourish />}
-            </AnimatePresence>
-        </a>
+                {/* Animated Gold Vine SVG */}
+                <AnimatePresence>
+                    {isHovered && <HoverFlourish />}
+                </AnimatePresence>
+            </a>
+
+            {/* --- DESKTOP DROPDOWN --- */}
+            {item.subItems && (
+                <AnimatePresence>
+                    {isHovered && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-48 z-50"
+                        >
+                            <div className="bg-[#FDFBF7] border border-[#D4AF37]/20 shadow-xl rounded-sm p-2 flex flex-col gap-1 relative before:absolute before:top-[-6px] before:left-1/2 before:-translate-x-1/2 before:w-3 before:h-3 before:bg-[#FDFBF7] before:border-l before:border-t before:border-[#D4AF37]/20 before:rotate-45">
+                                {item.subItems.map((sub: any) => (
+                                    <a
+                                        key={sub.name}
+                                        href={sub.href}
+                                        className={`${montserrat.className} block px-4 py-3 text-[11px] text-[#0B2447] hover:bg-[#D4AF37]/10 hover:text-[#8B1E1E] transition-colors uppercase tracking-widest text-center`}
+                                    >
+                                        {sub.name}
+                                    </a>
+                                ))}
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            )}
+        </div>
     );
 };
 
