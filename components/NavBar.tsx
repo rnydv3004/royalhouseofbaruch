@@ -190,12 +190,12 @@ const Navbar = () => {
                             animate={{ x: "0%", clipPath: "polygon(0% 0, 100% 0, 100% 100%, -20% 100%)" }}
                             exit={{ x: "100%", clipPath: "polygon(20% 0, 100% 0, 100% 100%, 0% 100%)" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="absolute right-0 top-0 bottom-0 w-[90%] bg-[#FDFBF7] shadow-2xl flex flex-col pl-16 pr-6 py-10 overflow-y-auto no-scrollbar"
+                            className="absolute right-0 top-0 bottom-0 w-[90%] bg-[#FDFBF7] shadow-2xl flex flex-col pl-16 pr-6 pt-10 pb-20 overflow-y-auto overflow-x-hidden no-scrollbar"
                         >
                             {/* Close Button */}
                             <button
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="self-end p-2 rounded-full border border-[#D4AF37]/20 hover:bg-[#D4AF37] hover:text-white transition-all duration-300 mb-12"
+                                className="self-end p-2 rounded-full border-2 border-[#D4AF37] hover:bg-[#D4AF37] text-[#ba7e04] transition-all duration-300 mb-5"
                             >
                                 <X size={24} />
                             </button>

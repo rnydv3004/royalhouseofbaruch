@@ -144,7 +144,7 @@ export const RoyalBulletin = () => {
                             <div className="h-px w-20 bg-linear-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
                         </div>
 
-                        <h2 className={`${cinzel.className} text-4xl md:text-6xl text-white font-normal uppercase tracking-widest mb-4`}>
+                        <h2 className={`${cinzel.className} text-2xl md:text-6xl text-white font-normal uppercase tracking-widest mb-4`}>
                             House <span className="text-[#D4AF37]">Announcements</span>
                         </h2>
 

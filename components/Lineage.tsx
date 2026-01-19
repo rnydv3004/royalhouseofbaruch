@@ -103,7 +103,7 @@ const Lineage = () => {
   const SectionHeading = ({ title, subtitle }: { title: string; subtitle: string }) => (
     <div className="text-center mb-16 relative z-20">
       <span className={`${montserrat.className} text-[#D4AF37] text-xs font-bold uppercase tracking-[0.3em]`}>{subtitle}</span>
-      <h2 className={`${cinzel.className} text-4xl md:text-5xl text-[#0B2447] mt-3`}>{title}</h2>
+      <h2 className={`${cinzel.className} text-3xl md:text-5xl text-[#0B2447] mt-3`}>{title}</h2>
     </div>
   );
 
